@@ -2,6 +2,8 @@ FROM maven:3.9.7-eclipse-temurin-17 AS build
 RUN git clone https://github.com/dummyrepos/spring-petclinic-june24.git
 RUN cd spring-petclinic-june24 && mvn clean package
 
+
+
 FROM amazoncorretto:17-alpine-jdk
 RUN mkdir /spc && chown nobody /spc
 USER nobody
