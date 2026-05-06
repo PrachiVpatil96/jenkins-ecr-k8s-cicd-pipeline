@@ -18,7 +18,7 @@ FROM amazoncorretto:17
 WORKDIR /spc-app
 
 # Copy the Maven-built JAR from target/
-COPY target/*.jar /spc-app/app.jar
+COPY target/*.jar /app.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
