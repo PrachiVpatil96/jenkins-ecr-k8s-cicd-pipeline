@@ -11,18 +11,21 @@
 # COPY --from=build --chown=nobody /spring-petclinic-june24/target/spring-petclinic-3.3.0-SNAPSHOT.jar /spc/spring-petclinic.jar
 # EXPOSE 8080
 # CMD ["java", "-jar", "spring-petclinic.jar"]
+FROM maven:3.9.7-eclipse-temurin-17 AS build
 
-FROM amazoncorretto:17
-
-# Set working directory inside container
 WORKDIR /spc-app
 
 COPY . .
 
 RUN mvn clean package -DskipTests
 
+FROM amazoncorretto:17
+
+# Set working directory inside container
+WORKDIR /spc-app
+
 # Copy the Maven-built JAR from target/
-COPY /spc-app/target/*.jar app.jar
+COPY --from=build /spc-app/target/*.jar app.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
