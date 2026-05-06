@@ -43,6 +43,6 @@ jobs:
     - name: Build the image
       run: |
            docker image build -t spc .
-           docker tag spc:latest ${{ secrets.DOCKER_USERNAME }}/ spc:latest
+           docker tag spc:latest ${{ secrets.DOCKER_USERNAME }}/spc:latest
            docker push ${{ secrets.DOCKER_USERNAME }}/spc:latest
     
