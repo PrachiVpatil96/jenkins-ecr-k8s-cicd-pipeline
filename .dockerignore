@@ -1,5 +1,4 @@
 # Ignore the target directory where compiled classes and JAR files are stored
-target/
 .devcontainer/
 k8s/
 
