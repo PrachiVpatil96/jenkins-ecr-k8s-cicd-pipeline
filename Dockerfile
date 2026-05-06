@@ -17,8 +17,12 @@ FROM amazoncorretto:17
 # Set working directory inside container
 WORKDIR /spc-app
 
+COPY . .
+
+RUN mvn clean package -DskipTests
+
 # Copy the Maven-built JAR from target/
-COPY /target/*. spc-app/app.jar
+COPY /spc-app/target/*.jar app.jar
 
 # Expose the port the app runs on
 EXPOSE 8080
