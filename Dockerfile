@@ -11,25 +11,39 @@
 # COPY --from=build --chown=nobody /spring-petclinic-june24/target/spring-petclinic-3.3.0-SNAPSHOT.jar /spc/spring-petclinic.jar
 # EXPOSE 8080
 # CMD ["java", "-jar", "spring-petclinic.jar"]
-FROM maven:3.9.7-eclipse-temurin-17 AS build
 
-WORKDIR /spc-app
+# FROM maven:3.9.7-eclipse-temurin-17 AS build
 
-COPY . .
+# WORKDIR /spc-app
 
-RUN mvn clean package -DskipTests
+# COPY . .
+
+# RUN mvn clean package -DskipTests
+
+# FROM amazoncorretto:17
+
+# # Set working directory inside container
+# WORKDIR /spc-app
+
+# # Copy the Maven-built JAR from target/
+# COPY --from=build /spc-app/target/*.jar app.jar
+
+# # Expose the port the app runs on
+# EXPOSE 8080
+
+# # Run the Spring Boot JAR
+# ENTRYPOINT ["java","-jar","app.jar"]
 
 FROM amazoncorretto:17
 
-# Set working directory inside container
+# Set working directory
 WORKDIR /spc-app
 
-# Copy the Maven-built JAR from target/
-COPY --from=build /spc-app/target/*.jar app.jar
+# Copy jar built by GitHub Actions
+COPY target/*.jar app.jar
 
-# Expose the port the app runs on
+# Expose Spring Boot port
 EXPOSE 8080
 
-# Run the Spring Boot JAR
-ENTRYPOINT ["java","-jar","app.jar"]
-
+# Run application
+ENTRYPOINT ["java", "-jar", "app.jar"]
